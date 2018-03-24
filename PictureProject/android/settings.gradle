@@ -1,0 +1,5 @@
+rootProject.name = 'PictureProject'
+
+include ':app'
+include ':rncamerakit'
+project(':rncamerakit').projectDir = new File(rootProject.projectdir, '../node_modules/react-native-camera-kit/android/')
