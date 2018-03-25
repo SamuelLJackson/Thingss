@@ -1,0 +1,22 @@
+import React,{Component} from 'react';
+
+import {
+    Image,
+	View,
+	} from 'react-native';
+
+export default class PictureSwiper extends Component {
+    const IDs = ['1521920062456', '1521933440367','1521933500916'];
+    render() {
+	render(
+	       <View>
+	       <Image source={{uri: 'http://52.186.27.227/static/'+IDs[0]+'.jpg'}}
+	       style={{width:400,400}} />
+	       </View>
+	       );
+    }
+    
+    componentDidMount() {
+	//return fetch('http://52.186.27.227/static/
+    }
+}

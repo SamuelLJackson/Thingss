@@ -9,41 +9,52 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+      View,
+      Image,
+      Alert,
+      TouchableOpacity
 } from 'react-native';
 
-import {CameraKitCamera} from 'react-native-camera-kit';
+import {
+    CameraKitCamera,
+	CameraKitCameraScreen
+} from 'react-native-camera-kit';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import SamCamera from './SamCamera';
+import PictureSwiper from './PictureSwiper';
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-	    <CameraKitCamera
-	    ref={cam => this.camera = cam }
-	    style={{
-		    flex: 1,
-		    backgroundColor: 'white'
-		}}
-	    cameraOptions ={{
-		    flashMode: 'auto',
-		    focusMode: 'on',
-		    zoomMode: 'on',
-		    ratioOverlay: '1:1',
-		    ratioOverlayColor: '#00000077'
-		}}
-	    onReadQRCode={(event) => console.log(event.nativeEvent.qrcodeStringValue)}
-	    />
-    );
-  }
+export default class App extends Component{
+    constructor(props) {
+	super(props);
+	this.state = {
+	    page: undefined
+	};
+    }
+
+    render() {
+	if (this.state.page) {
+	    const Page = this.state.page;
+	    return <Page />;
+	}
+	
+	return (
+		<View style={styles.container}>
+		  <Text>Welcome!</Text>
+		  <TouchableOpacity onPress={()=> this.setState({page:SamCamera})}>
+		    <View style={styles.buttonBody}>
+		      <Text style={{color:'white'}}>Camera</Text>
+		    </View>
+		  </TouchableOpacity>
+		  <TouchableOpacity onPress={()=> this.setState({page:PictureSwiper})}>
+		    <View style={styles.buttonBody}>
+		      <Text style={{color:'white'}}>Saved Pictures</Text>
+		    </View>
+		  </TouchableOpacity>
+		  
+		</View>
+		);
+    }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -51,14 +62,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  buttonBody: {
+	    marginTop: 40,
+	    height: 80,
+	    width: 200,
+	    backgroundColor: 'black',
+	    justifyContent: 'center',
+	    alignItems: 'center'
   },
 });

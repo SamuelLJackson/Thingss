@@ -1,0 +1,69 @@
+import React,{Component} from 'react';
+import {
+    CameraKitCamera,
+	CameraKitCameraScreen
+	} from 'react-native-camera-kit';
+
+
+export default class SamCamera extends Component {
+    onBottomButtonPressed(event) {
+
+	const captureImages = JSON.stringify(event.captureImages);
+	const capturedImages = event.captureImages;
+	const data = new FormData();
+	data.append('name','testName');
+	data.append('photo', {
+		uri: capturedImages[0].uri,
+		    type: 'image/jpeg',
+		    name: 'testPhoneName'
+	    });
+	fetch('http://52.186.27.227/upload2', {
+		method: 'post',
+		    body: data
+		    }).then(res => {
+			    console.log(res)
+			});
+	Alert.alert(
+		    `${event.type} button pressed`,
+		    `${captureImages}`,
+		    [
+		     {text: 'OK', onPress: () => console.log('OK Pressed')},
+		     ],
+		    {cancelable: false}
+		    )
+    }
+    /*show image taken */
+
+
+    /*show camera */
+  render() {
+      if (this.state.page) {
+	  const Page = this.state.page;
+	  return <Page />;
+	      }
+    return (
+
+	    <CameraKitCameraScreen
+	    actions={{ rightButtonText: 'Done', leftButtonText: 'Cancel' }}
+	    onBottomButtonPressed={(event) => this.onBottomButtonPressed(event)}
+	    flashImages={{
+		    on: require('./images/flashOn.png'),
+		    off: require('./images/flashOff.png'),
+		    auto: require('./images/flashAuto.png')
+		}}
+
+	    cameraOptions ={{
+		    flashMode: 'auto',
+		    focusMode: 'on',
+		    zoomMode: 'on',
+		    ratioOverlay: '1:1',
+		    ratioOverlayColor: '#00000077'
+		}}
+	    cameraFlipImage={require('./images/cameraFlipIcon.png')}
+	    captureButtonImage={require('./images/cameraButton.png')}
+	    />
+	    
+    );
+
+
+  }
